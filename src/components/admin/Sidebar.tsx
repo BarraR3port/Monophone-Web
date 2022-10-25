@@ -1,62 +1,50 @@
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
-import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
-import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
-import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
+import ExtensionOutlinedIcon from '@mui/icons-material/ExtensionOutlined';
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
+import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
 import {Box, Divider, IconButton, Typography, useTheme} from "@mui/material";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Menu, MenuItem, ProSidebar} from "react-pro-sidebar";
 import "react-pro-sidebar/dist/css/styles.css";
-import {tokens} from "../../pages/theme";
+import {tokens} from "../../styles/theme";
 import Link from "next/link";
+import Image from "next/image";
 
 
 const dashBoardItems = () => [
     {
         title: "Dashboard",
-        to: "/dashboard",
+        to: "/",
         icon: <HomeOutlinedIcon/>,
     },
 ];
 const dataItems = () => [
+    /*    {
+            title: "Staff",
+            to: "/staff",
+            icon: <PeopleOutlinedIcon/>,
+        },*/
     {
-        title: "Home Team",
-        to: "/team",
-        icon: <PeopleOutlinedIcon/>,
-    },
-    {
-        title: "Contacts Information",
-        to: "/contacts",
+        title: "Users",
+        to: "/users",
         icon: <ContactsOutlinedIcon/>,
     },
+    {
+        title: "Logs",
+        to: "/logs",
+        icon: <AssignmentOutlinedIcon/>,
+    },
 ];
-const pageItems = () => [
+const pluginItems = () => [
     {
-        title: "Invodices Balances",
-        to: "/invoices",
-        icon: <ReceiptOutlinedIcon/>,
-    },
-    {
-        title: "Profile Form",
-        to: "/form",
-        icon: <PersonOutlinedIcon/>,
-    },
-    {
-        title: "Calendar",
-        to: "/calendar",
-        icon: <CalendarTodayOutlinedIcon/>,
-    },
-    {
-        title: "FAQ",
-        to: "/faq",
-        icon: <HelpOutlineOutlinedIcon/>,
+        title: "Plugin List",
+        to: "/plugins",
+        icon: <ExtensionOutlinedIcon/>,
     },
 ];
 const chartsItems = () => [
@@ -87,6 +75,10 @@ const Sidebar = ({isSidebar, path}: { isSidebar: any, path: any }) => {
     const colors = tokens(theme.palette.mode);
     const [isCollapsed, setIsCollapsed] = useState(isSidebar);
     const [selected, setSelected] = useState(path);
+    useEffect(() => {
+        setSelected(path);
+    }, [path]);
+
     return (
         <Box
             sx={{
@@ -139,30 +131,23 @@ const Sidebar = ({isSidebar, path}: { isSidebar: any, path: any }) => {
                         {/* MENU ITEMS */}
                         <Box>
                             {dashBoardItems().map((item) => (
-                                <Item
-                                    title={item.title}
-                                    to={item.to}
-                                    icon={item.icon}
-                                    selected={selected}
-                                    setSelected={setSelected}
-                                    isCollapsed={isCollapsed}
+                                <Item key={item.title}
+                                      title={item.title}
+                                      to={item.to}
+                                      icon={item.icon}
+                                      selected={selected}
+                                      setSelected={setSelected}
+                                      isCollapsed={isCollapsed}
                                 />
                             ))}
-
-                            <Divider>
-                                <Typography variant="h5" color={colors.grey[300]}>
-                                    Data
-                                </Typography>
-                            </Divider>
-
                             {dataItems().map((item) => (
-                                <Item
-                                    title={item.title}
-                                    to={item.to}
-                                    icon={item.icon}
-                                    selected={selected}
-                                    setSelected={setSelected}
-                                    isCollapsed={isCollapsed}
+                                <Item key={item.title}
+                                      title={item.title}
+                                      to={item.to}
+                                      icon={item.icon}
+                                      selected={selected}
+                                      setSelected={setSelected}
+                                      isCollapsed={isCollapsed}
                                 />
                             ))}
 
@@ -172,14 +157,14 @@ const Sidebar = ({isSidebar, path}: { isSidebar: any, path: any }) => {
                                 </Typography>
                             </Divider>
 
-                            {pageItems().map((item) => (
-                                <Item
-                                    title={item.title}
-                                    to={item.to}
-                                    icon={item.icon}
-                                    selected={selected}
-                                    setSelected={setSelected}
-                                    isCollapsed={isCollapsed}
+                            {pluginItems().map(item => (
+                                <Item key={item.title}
+                                      title={item.title}
+                                      to={item.to}
+                                      icon={item.icon}
+                                      selected={selected}
+                                      setSelected={setSelected}
+                                      isCollapsed={isCollapsed}
                                 />
                             ))}
 
@@ -190,41 +175,36 @@ const Sidebar = ({isSidebar, path}: { isSidebar: any, path: any }) => {
                             </Divider>
 
                             {chartsItems().map((item) => (
-                                <Item
-                                    title={item.title}
-                                    to={item.to}
-                                    icon={item.icon}
-                                    selected={selected}
-                                    setSelected={setSelected}
-                                    isCollapsed={isCollapsed}
+                                <Item key={item.title}
+                                      title={item.title}
+                                      to={item.to}
+                                      icon={item.icon}
+                                      selected={selected}
+                                      setSelected={setSelected}
+                                      isCollapsed={isCollapsed}
                                 />
                             ))}
                         </Box>
-                    </Box>
-                    {!isCollapsed && (
-                        <Box>
-                            <Box position="absolute" bottom={0}>
-                                <img
-                                    alt="profile-user"
+                        {!isCollapsed && (
+                            <Box sx={{display: "block", marginLeft: "auto", textAlign: "center"}}>
+                                <Image
                                     width="100px"
                                     height="100px"
-                                    src={`../../assets/user.png`}
-                                    style={{cursor: "pointer", borderRadius: "50%"}}
+                                    src={`https://mc-heads.net/avatar/BarraR3port`}
+                                    style={{
+                                        cursor: "pointer",
+                                        borderRadius: "50%",
+                                        border: "2px solid #fff",
+                                        color: colors.blueAccent[200],
+                                    }}
                                 />
+                                <Typography variant="h4" color={colors.blueAccent[600]}>
+                                    BarraR3port
+                                </Typography>
                             </Box>
-                            {/* <Box textAlign="center">
-                  <Typography
-                    variant="h2"
-                    color={colors.grey[100]}
-                    fontWeight="bold"
-                    sx={{ m: "10px 0 0" }}
-                  >
-                    Bruno Bastidas{" "}
-                  </Typography>
-                  <Typography>Admin</Typography>
-                </Box> */}
-                        </Box>
-                    )}
+                        )}
+                    </Box>
+
                 </Menu>
             </ProSidebar>
         </Box>
@@ -237,33 +217,23 @@ const Item = ({
                   icon,
                   selected,
                   setSelected,
-                  isCollapsed,
-              }: {
-    title: string;
-    to: string;
-    icon: any;
-    selected: any;
-    setSelected: any;
-    isCollapsed: any;
-}) => {
+                  isCollapsed
+              }: { title: string; to: string; icon: any; selected: any; setSelected: any; isCollapsed: any; }) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     return (
-        <Box>
-            <Link href={to === '/admin' ? "" : "/admin" + to}>
-                <MenuItem
-                    active={selected === title || selected === to}
-                    style={{color: colors.grey[100]}}
-                    onClick={() => setSelected(title)}
-                    icon={icon}
-                >
-                    {!isCollapsed && <Typography>{title}</Typography>}
 
-                </MenuItem>
-            </Link>
+        <Link href={to === '/admin' ? "" : "/admin" + to}>
+            <MenuItem
+                style={{color: colors.grey[100]}}
+                active={selected === "/admin" + title || selected === "/admin" + to}
+                onClick={() => setSelected(title)}
+                icon={icon}
+            >
+                {!isCollapsed && <Typography>{title}</Typography>}
 
-        </Box>
-
+            </MenuItem>
+        </Link>
 
     );
 };

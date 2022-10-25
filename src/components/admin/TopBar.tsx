@@ -7,7 +7,7 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import {Box, IconButton, useTheme} from "@mui/material";
 import InputBase from "@mui/material/InputBase";
 import {useContext} from "react";
-import {ColorModeContext, tokens} from "../../pages/theme";
+import {ColorModeContext, tokens} from "../../styles/theme";
 
 const TopBar = () => {
     const theme = useTheme();

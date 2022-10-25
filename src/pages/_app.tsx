@@ -1,16 +1,18 @@
-import {NextPage} from 'next';
 import {AppProps} from 'next/app';
 import {useRouter} from 'next/router';
 import '../styles/globals.css';
-import AdminPage from './admin/admin';
+import AdminDashBoard from "../components/admin/AdminBar";
+import {SessionProvider} from "next-auth/react";
 
-const MyApp: NextPage<AppProps> = ({Component, pageProps, router}) => {
+export default function App({Component, pageProps}: AppProps) {
     const path = useRouter().pathname;
-    if (path.startsWith("/admin")) {
-        return (<AdminPage Component={Component} pageProps={pageProps} router={router}/>);
-    } else {
-        return (<Component {...pageProps} />)
-    }
+    return (
+        <SessionProvider session={pageProps.session}>
+            {(path.startsWith("/admin")) ?
+                <AdminDashBoard Component={Component} pageProps={pageProps}/> :
+                <Component {...pageProps} />}
+        </SessionProvider>
+    );
+
 }
 
-export default MyApp
